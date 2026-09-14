@@ -11,7 +11,8 @@ public class RegisterRequestHandler
         _repository = repository;
     }
 
-    public async Task Handle(RegisterRequestCommand command)
+    public async Task<RegisterRequestResult> Handle(
+        RegisterRequestCommand command)
     {
         var request = new Request(
             command.Id,
@@ -25,11 +26,13 @@ public class RegisterRequestHandler
         if (existing is not null)
         {
             if (existing.HasSameContentAs(request))
-                return;
+                return RegisterRequestResult.AlreadyRegistered;
 
             throw new RequestConflictException(command.Id);
         }
 
         await _repository.AddAsync(request);
+
+        return RegisterRequestResult.Registered;
     }
 }

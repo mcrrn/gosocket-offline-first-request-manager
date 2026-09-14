@@ -71,4 +71,42 @@ public class RegisterRequestTests
             () => handler.Handle(second)
         );
     }
+
+    [Fact]
+    public async Task Register_new_request_should_return_registered()
+    {
+        var repository = new FakeRequestRepository();
+        var handler = new RegisterRequestHandler(repository);
+
+        var command = new RegisterRequestCommand(
+            Guid.NewGuid(),
+            "My request",
+            "hello",
+            DateTime.UtcNow
+        );
+
+        var result = await handler.Handle(command);
+
+        Assert.Equal(RegisterRequestResult.Registered, result);
+    }
+
+    [Fact]
+    public async Task Register_same_request_twice_should_return_already_registered()
+    {
+        var repository = new FakeRequestRepository();
+        var handler = new RegisterRequestHandler(repository);
+
+        var command = new RegisterRequestCommand(
+            Guid.NewGuid(),
+            "My request",
+            "hello",
+            DateTime.UtcNow
+        );
+
+        await handler.Handle(command);
+
+        var result = await handler.Handle(command);
+
+        Assert.Equal(RegisterRequestResult.AlreadyRegistered, result);
+    }
 }

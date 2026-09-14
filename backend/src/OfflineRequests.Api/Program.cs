@@ -58,3 +58,5 @@ app.MapPost("/requests", async (
 });
 
 app.Run();
+
+public partial class Program { }

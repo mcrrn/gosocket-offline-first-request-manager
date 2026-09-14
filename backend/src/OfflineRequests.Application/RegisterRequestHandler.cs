@@ -26,6 +26,8 @@ public class RegisterRequestHandler
         {
             if (existing.HasSameContentAs(request))
                 return;
+
+            throw new RequestConflictException(command.Id);
         }
 
         await _repository.AddAsync(request);

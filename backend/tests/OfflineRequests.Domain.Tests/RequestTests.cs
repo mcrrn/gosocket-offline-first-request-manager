@@ -14,14 +14,12 @@ public class RequestTests
             id,
             "My request",
             "hello",
-            "text",
             createdAt
         );
 
         Assert.Equal(id, request.Id);
         Assert.Equal("My request", request.Name);
         Assert.Equal("hello", request.Payload);
-        Assert.Equal("text", request.Type);
         Assert.Equal(createdAt, request.CreatedAt);
     }
 
@@ -35,7 +33,6 @@ public class RequestTests
             id,
             "My request",
             "hello",
-            "text",
             createdAt
         );
 
@@ -43,7 +40,6 @@ public class RequestTests
             id,
             "My request",
             "hello",
-            "text",
             createdAt
         );
 
@@ -60,7 +56,6 @@ public class RequestTests
             id,
             "My request",
             "hello",
-            "text",
             createdAt
         );
 
@@ -68,7 +63,6 @@ public class RequestTests
             id,
             "My request",
             "different",
-            "text",
             createdAt
         );
 

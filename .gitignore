@@ -1,0 +1,45 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+out/
+
+# Visual Studio / .NET user files
+.vs/
+*.user
+*.userosscache
+*.suo
+*.rsuser
+*.nuser
+
+# Test and coverage results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+coverage/
+
+# NuGet and generated package files
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+appsettings.Local.json
+appsettings.*.Local.json
+
+# IDEs and operating system files
+.idea/
+.vscode/
+.fleet/
+.DS_Store
+Thumbs.db
+

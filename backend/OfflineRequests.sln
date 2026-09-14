@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfflineRequests.Domain.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfflineRequests.Application.Tests", "tests\OfflineRequests.Application.Tests\OfflineRequests.Application.Tests.csproj", "{AECD6CED-62BC-4A2F-81D7-449B5476E298}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfflineRequests.Infrastructure.Tests", "tests\OfflineRequests.Infrastructure.Tests\OfflineRequests.Infrastructure.Tests.csproj", "{6198F8EF-972B-447B-9C54-F859109C5DA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{AECD6CED-62BC-4A2F-81D7-449B5476E298}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AECD6CED-62BC-4A2F-81D7-449B5476E298}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AECD6CED-62BC-4A2F-81D7-449B5476E298}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6198F8EF-972B-447B-9C54-F859109C5DA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6198F8EF-972B-447B-9C54-F859109C5DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6198F8EF-972B-447B-9C54-F859109C5DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6198F8EF-972B-447B-9C54-F859109C5DA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{20A4C52B-A18E-48F8-AA26-AF69B03D3E82} = {62AFEDDA-9EAA-44A2-84C3-585BC1EB1FA8}
@@ -60,5 +66,6 @@ Global
 		{368414EF-E0FC-4CCF-92DE-EA6769A4C5CE} = {62AFEDDA-9EAA-44A2-84C3-585BC1EB1FA8}
 		{3C450B68-83B4-4DB2-8089-43A54E6A001E} = {780CFAE3-7A27-4FFA-A927-54F14DBEC90B}
 		{AECD6CED-62BC-4A2F-81D7-449B5476E298} = {780CFAE3-7A27-4FFA-A927-54F14DBEC90B}
+		{6198F8EF-972B-447B-9C54-F859109C5DA4} = {780CFAE3-7A27-4FFA-A927-54F14DBEC90B}
 	EndGlobalSection
 EndGlobal

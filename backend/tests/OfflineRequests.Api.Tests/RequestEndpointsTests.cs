@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using OfflineRequests.Infrastructure;
 
@@ -114,5 +115,50 @@ public class RequestEndpointsTests
 
         Assert.Equal(HttpStatusCode.Created, firstResponse.StatusCode);
         Assert.Equal(HttpStatusCode.Conflict, secondResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task Invalid_request_returns_all_validation_errors()
+    {
+        await using var application =
+            new CustomWebApplicationFactory();
+
+        using var scope = application.Services.CreateScope();
+
+        var dbContext =
+            scope.ServiceProvider.GetRequiredService<RequestsDbContext>();
+
+        await dbContext.Database.EnsureCreatedAsync();
+
+        var response = await application.CreateClient().PostAsJsonAsync(
+            "/requests",
+            new
+            {
+                id = Guid.Empty,
+                name = " ",
+                payload = (string?)null,
+                createdAt = new DateTime(
+                    2026,
+                    9,
+                    14,
+                    10,
+                    0,
+                    0,
+                    DateTimeKind.Unspecified
+                )
+            }
+        );
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        using var body = JsonDocument.Parse(
+            await response.Content.ReadAsStringAsync()
+        );
+        var errors = body.RootElement.GetProperty("errors");
+
+        Assert.True(errors.TryGetProperty("id", out _));
+        Assert.True(errors.TryGetProperty("name", out _));
+        Assert.True(errors.TryGetProperty("payload", out _));
+        Assert.True(errors.TryGetProperty("createdAt", out _));
     }
 }

@@ -109,4 +109,56 @@ public class RegisterRequestTests
 
         Assert.Equal(RegisterRequestResult.AlreadyRegistered, result);
     }
+
+    [Fact]
+    public async Task Register_invalid_request_should_return_all_validation_errors()
+    {
+        var repository = new FakeRequestRepository();
+        var handler = new RegisterRequestHandler(repository);
+
+        var command = new RegisterRequestCommand(
+            Guid.Empty,
+            " ",
+            null!,
+            new DateTime(2026, 9, 14, 10, 0, 0, DateTimeKind.Unspecified)
+        );
+
+        var exception = await Assert.ThrowsAsync<RequestValidationException>(
+            () => handler.Handle(command)
+        );
+
+        Assert.Equal(
+            ["id", "name", "payload", "createdAt"],
+            exception.Errors.Keys
+        );
+        Assert.Empty(repository.Requests);
+    }
+
+    [Fact]
+    public async Task Register_request_should_normalize_created_at_to_utc()
+    {
+        var repository = new FakeRequestRepository();
+        var handler = new RegisterRequestHandler(repository);
+        var createdAt = new DateTime(
+            2026,
+            9,
+            14,
+            10,
+            0,
+            0,
+            DateTimeKind.Local
+        );
+
+        await handler.Handle(new RegisterRequestCommand(
+            Guid.NewGuid(),
+            "My request",
+            "hello",
+            createdAt
+        ));
+
+        var registered = Assert.Single(repository.Requests);
+
+        Assert.Equal(DateTimeKind.Utc, registered.CreatedAt.Kind);
+        Assert.Equal(createdAt.ToUniversalTime(), registered.CreatedAt);
+    }
 }

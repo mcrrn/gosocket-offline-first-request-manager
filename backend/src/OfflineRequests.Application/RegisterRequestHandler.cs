@@ -14,11 +14,13 @@ public class RegisterRequestHandler
     public async Task<RegisterRequestResult> Handle(
         RegisterRequestCommand command)
     {
+        RegisterRequestValidator.Validate(command);
+
         var request = new Request(
             command.Id,
             command.Name,
             command.Payload,
-            command.CreatedAt
+            command.CreatedAt.ToUniversalTime()
         );
 
         var existing = await _repository.GetByIdAsync(command.Id);

@@ -55,6 +55,10 @@ app.MapPost("/requests", async (
             Error = "Una solicitud con el mismo ID ya existe, pero con contenido diferente."
         });
     }
+    catch (RequestValidationException exception)
+    {
+        return Results.ValidationProblem(exception.Errors);
+    }
 });
 
 app.Run();

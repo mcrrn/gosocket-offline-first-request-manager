@@ -20,3 +20,8 @@ export interface RequestGroup {
   name: string
   children: GroupChild[]
 }
+
+export interface OfflineStore {
+  requests: LocalRequest[]
+  groups: RequestGroup[]
+}

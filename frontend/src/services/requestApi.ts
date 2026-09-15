@@ -20,7 +20,7 @@ export class HttpRequestApi implements RequestApi {
 
   constructor(
     baseUrl: string,
-    fetcher: typeof fetch = fetch,
+    fetcher: typeof fetch = globalThis.fetch.bind(globalThis),
   ) {
     this.baseUrl = baseUrl.replace(/\/$/, '')
     this.fetcher = fetcher

@@ -1,4 +1,4 @@
-namespace OfflineRequests.Api;
+namespace OfflineRequests.Api.Dtos;
 
 public record RegisterRequestDto(
     Guid Id,

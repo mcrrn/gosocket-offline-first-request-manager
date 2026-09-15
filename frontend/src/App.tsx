@@ -46,14 +46,31 @@ function App() {
   }
 
   function createGroup(name: string, selectedChildren: string[]) {
-    const children: GroupChild[] = selectedChildren.map((value) => {
-      const [kind, id] = value.split(':')
-      return kind === 'request' ? { kind: 'request', id } : { kind: 'group', id }
-    })
+    const children = groupChildrenFromValues(selectedChildren)
 
     setStore((current) => ({
       ...current,
       groups: [{ id: crypto.randomUUID(), name, children }, ...current.groups],
+    }))
+  }
+
+  function updateGroup(id: string, name: string, selectedChildren: string[]) {
+    const children = groupChildrenFromValues(selectedChildren)
+    setStore((current) => ({
+      ...current,
+      groups: current.groups.map((group) => group.id === id ? { ...group, name, children } : group),
+    }))
+  }
+
+  function deleteGroup(id: string) {
+    setStore((current) => ({
+      ...current,
+      groups: current.groups
+        .filter((group) => group.id !== id)
+        .map((group) => ({
+          ...group,
+          children: group.children.filter((child) => child.kind !== 'group' || child.id !== id),
+        })),
     }))
   }
 
@@ -74,7 +91,7 @@ function App() {
       requests: current.requests.map((request) => synchronizedById.get(request.id) ?? request),
     }))
     setSelectedRequest((current) => current === null ? null : synchronizedById.get(current.id) ?? current)
-    setMessage(`${pendingRequests.length} solicitud(es): ${result.processed} enviada(s), ${result.failed} fallida(s), ${result.pending} pendiente(s).`)
+    setMessage(`${quantity(pendingRequests.length, 'solicitud', 'solicitudes')}: ${quantity(result.processed, 'enviada', 'enviadas')}, ${quantity(result.failed, 'fallida', 'fallidas')}, ${quantity(result.pending, 'pendiente', 'pendientes')}.`)
     setIsSynchronizing(false)
   }
 
@@ -91,12 +108,14 @@ function App() {
         groups={store.groups}
         disabled={isSynchronizing}
         onCreate={createGroup}
+        onUpdate={updateGroup}
+        onDelete={deleteGroup}
         onSynchronize={synchronize}
       />
 
       <section>
         <h2>Solicitudes</h2>
-        <p>{pendingCount} pendiente(s) de envío.</p>
+        <p>{quantity(pendingCount, 'pendiente', 'pendientes')} de envío.</p>
         <button
           className="primary-button"
           type="button"
@@ -119,6 +138,17 @@ function App() {
       {selectedRequest && <RequestDetail request={selectedRequest} onClose={() => setSelectedRequest(null)} />}
     </main>
   )
+}
+
+function quantity(count: number, singular: string, plural: string): string {
+  return `${count} ${count === 1 ? singular : plural}`
+}
+
+function groupChildrenFromValues(values: string[]): GroupChild[] {
+  return values.map((value) => {
+    const [kind, id] = value.split(':')
+    return kind === 'request' ? { kind: 'request', id } : { kind: 'group', id }
+  })
 }
 
 export default App

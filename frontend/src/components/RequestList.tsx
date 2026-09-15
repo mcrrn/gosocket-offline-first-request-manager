@@ -14,16 +14,18 @@ export function RequestList({ requests, disabled, onSelect, onSynchronize }: Req
   return (
     <ul>
       {requests.map((request) => (
-        <li key={request.id}>
-          <button type="button" onClick={() => onSelect(request)}>
-            {request.name}
-          </button>
+        <li className="request-item" key={request.id}>
+          <strong>{request.name}</strong>
           {' · '}
           {requestTypeLabel(request.type)}
           {' · '}
           <Status status={request.status} />
           {' '}
+          <button className="compact-button" type="button" onClick={() => onSelect(request)}>
+            Ver detalle
+          </button>
           <button
+            className="compact-button"
             type="button"
             onClick={() => onSynchronize(request.id)}
             disabled={disabled || request.status !== 'Pending'}
@@ -38,5 +40,5 @@ export function RequestList({ requests, disabled, onSelect, onSynchronize }: Req
 
 export function Status({ status }: { status: LocalRequest['status'] }) {
   const labels = { Pending: 'Pendiente', Processed: 'Enviada', Failed: 'Fallida' }
-  return <span>{labels[status]}</span>
+  return <span className={`status status-${status.toLowerCase()}`}>{labels[status]}</span>
 }

@@ -98,6 +98,7 @@ function App() {
         <h2>Solicitudes</h2>
         <p>{pendingCount} pendiente(s) de envío.</p>
         <button
+          className="primary-button"
           type="button"
           onClick={() => synchronize(store.requests.map((request) => request.id))}
           disabled={isSynchronizing || pendingCount === 0}

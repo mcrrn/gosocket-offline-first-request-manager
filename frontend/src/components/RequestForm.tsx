@@ -50,7 +50,7 @@ export function RequestForm({ onCreate }: RequestFormProps) {
           <textarea id="request-payload" name="payload" rows={4} required />
         </p>
 
-        <button type="submit">Guardar</button>
+        <button className="primary-button" type="submit">Guardar</button>
       </form>
     </section>
   )

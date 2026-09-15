@@ -38,7 +38,7 @@ export function GroupManager({ requests, groups, disabled, onCreate, onSynchroni
     <section>
       <h2>Agrupaciones</h2>
 
-      <form onSubmit={handleSubmit}>
+      <form className="group-form" onSubmit={handleSubmit}>
         <p>
           <label htmlFor="group-name">Nombre del grupo</label>
           <input id="group-name" name="name" required />
@@ -70,7 +70,7 @@ export function GroupManager({ requests, groups, disabled, onCreate, onSynchroni
             <li key={group.id}>
               {group.name} ({requestIds.length} solicitudes)
               {' '}
-              <button type="button" disabled={disabled || requestIds.length === 0} onClick={() => onSynchronize(requestIds)}>
+              <button className="compact-button" type="button" disabled={disabled || requestIds.length === 0} onClick={() => onSynchronize(requestIds)}>
                 Enviar grupo
               </button>
             </li>

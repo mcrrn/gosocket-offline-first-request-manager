@@ -11,3 +11,34 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+section {
+  margin: 24px 0;
+}
+
+label {
+  display: block;
+}
+
+input,
+select,
+textarea {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+}
+
+fieldset label {
+  display: block;
+}
+
+fieldset input {
+  display: inline;
+  width: auto;
+}

@@ -15,6 +15,12 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
     public CustomWebApplicationFactory()
     {
+        Environment.SetEnvironmentVariable(
+            "OFFLINE_REQUESTS_CONNECTION_STRING",
+            "DataSource=:memory:");
+        Environment.SetEnvironmentVariable(
+            "OFFLINE_REQUESTS_CORS_ORIGINS",
+            "http://localhost");
         _connection.Open();
     }
 

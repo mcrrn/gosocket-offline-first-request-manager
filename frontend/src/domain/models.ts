@@ -7,6 +7,8 @@ export interface LocalRequest {
   payload: string
   status: RequestStatus
   createdAt: string
+  processedPayload?: string
+  errorMessage?: string
 }
 
 export type GroupChild =

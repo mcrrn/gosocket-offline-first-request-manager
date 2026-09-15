@@ -32,6 +32,12 @@ builder.Services.AddScoped<RegisterRequestHandler>();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<RequestsDbContext>();
+    dbContext.Database.Migrate();
+}
+
 app.UseCors("Frontend");
 app.MapRequestEndpoints();
 

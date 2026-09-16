@@ -9,6 +9,21 @@ namespace OfflineRequests.Api.Tests;
 public class RequestEndpointsTests
 {
     [Fact]
+    public async Task Health_returns_healthy_status()
+    {
+        await using var application = new CustomWebApplicationFactory();
+
+        var response = await application.CreateClient().GetAsync("/health");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        using var body = JsonDocument.Parse(
+            await response.Content.ReadAsStringAsync());
+
+        Assert.Equal("healthy", body.RootElement.GetProperty("status").GetString());
+    }
+
+    [Fact]
     public async Task New_request_returns_created()
     {
         await using var application =

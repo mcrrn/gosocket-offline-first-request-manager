@@ -40,6 +40,7 @@ using (var scope = app.Services.CreateScope())
 
 app.UseCors("Frontend");
 app.MapRequestEndpoints();
+app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
 
 app.Run();
 
